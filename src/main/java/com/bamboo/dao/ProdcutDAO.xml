@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.bamboo.dao.ProductDAO">
+	
+	<select id="queryByLevelOne"  parameterType="int" resultType="Product">
+		select * from easybuy_product where categoryLevel1Id=#{id}
+	</select>
+	<select id="queryByLevelTwo"  parameterType="int" resultType="Product">
+		select * from easybuy_product where categoryLevel2Id=#{param1} limit #{param2},#{param3}
+	</select>
+	<select id="queryByLevelThree"  parameterType="int" resultType="Product">
+		select * from easybuy_product where categoryLevel3Id=#{param1} limit #{param2},#{param3}
+	</select>
+	<select id="getPagesByLevelTwo"  parameterType="int" resultType="int">
+		select COUNT(*)from easybuy_product where categoryLevel3Id=#{id}
+	</select>
+	<select id="getPagesByLevelThree"  parameterType="int" resultType="int">
+		select COUNT(*)from easybuy_product where categoryLevel3Id=#{id}
+	</select>
+	<select id="getProductById"  parameterType="int" resultType="Product">
+		select* from easybuy_product where id=#{id}
+	</select>
+</mapper>

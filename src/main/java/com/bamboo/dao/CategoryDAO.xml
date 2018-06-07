@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd"> 
+<mapper namespace="com.bamboo.dao.CategoryDAO">
+	
+	<select id="queryByTypeAndParentId"  parameterType="int" resultType="Category">
+		select * from easybuy_product_category where type=#{param1}
+			<if test="param2 !=0">
+				and parentId=#{param2}
+			</if>
+	</select>
+	<select id="queryLevelTwoByLevelOne" parameterType="int" resultType="Category">
+		select * from easybuy_product_category where type =2 and parentId=#{id}
+	</select>
+</mapper>
