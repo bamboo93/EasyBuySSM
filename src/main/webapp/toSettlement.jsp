@@ -75,15 +75,18 @@
 							}</td>
 						<td align="center">
 							<div class="c_num">
-								<input type="button" value="" onclick="subQuantity(this,${product.price},${product.stock });" class="car_btn_1" /> 
-								<input type="text" value="${quantity }" name="quantit" class="car_ipt" readonly="readonly" /> 
-								<input type="button" value="" onclick="addQuantity(this,${product.price});" class="car_btn_2" />
+								<input type="button" value="" onclick="subQuantity(this,${product.price});" class="car_btn_1" /> 
+								<input type="text" value="${quantity }" name="quantity" class="car_ipt" readonly="readonly" /> 
+								<input type="button" value="" onclick="addQuantity(this,${product.price},${product.stock });" class="car_btn_2" />
 							</div>
 						</td>
 						<td align="center" style="color: #ff4e00;" class="qprice">￥${product.price*quantity}</td>
 						<td align="center">
 							<a href="javascript:void(0);" onclick="removeCart(this);" class="delete">删除</a>
 						</td>
+						<input type="hidden" id="fileName"  value="${product.fileName }" />
+						<input type="hidden" id="name"  value="${product.name }" />
+						<input type="hidden" id="myPrice"  value="${product.price }" />
 					</tr>
 					
 					
@@ -122,7 +125,7 @@
 						<!-- 继续购物 -->
 						<a href="main.jsp"><img src="images/buy1.gif" /></a> 
 						<!-- 确认结算 -->
-						<a href="javascript:void(0);" onclick="settlement2()"><img src="images/buy2.gif" /></a>
+						<a href="javascript:void(0)" onclick="jiesuan()"><img src="images/buy2.gif" /></a>
 						</td>
 					</tr>
 				</table>

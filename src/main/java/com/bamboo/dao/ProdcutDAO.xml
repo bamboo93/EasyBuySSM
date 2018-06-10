@@ -20,4 +20,8 @@
 	<select id="getProductById"  parameterType="int" resultType="Product">
 		select* from easybuy_product where id=#{id}
 	</select>
+	<insert id="createOrder" >
+		insert into easybuy_order(userId,loginName,userAddress,createTime,cost,serialNumber)
+		 values(#{param1},#{param2},#{param3},#{param4},#{param5},#{param6});
+	</insert>
 </mapper>

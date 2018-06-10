@@ -8,4 +8,7 @@
 	<select id="login" parameterType="com.bamboo.entity.User" resultType="com.bamboo.entity.User">
 		select * from easybuy_user where loginName=#{loginName} and password=#{password}
 	</select>
+	<select id="getAddressById" parameterType="int" resultType="Address">
+		select * from easybuy_user_address where userId=#{id}
+	</select>
 </mapper>

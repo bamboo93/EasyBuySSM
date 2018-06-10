@@ -82,11 +82,11 @@
         </span>
         <!--End 所在收货地区 End-->
         <span class="fr">
-          <c:if test="${sessionScope.user==null}">
+          <c:if test="${sessionScope.user2==null}">
             <span class="fl">你好，请<a href="login.jsp"  style="color:#ff4e00;">登录</a>&nbsp;<a href="register.jsp" style="color:#ff4e00;">免费注册</a>&nbsp;&nbsp;</span>
           </c:if>
-          <c:if test="${sessionScope.user!=null}">
-            <span class="fl"><a href="userInfo.jsp">欢迎回来！${sessionScope.user.userName}</a>&nbsp;|&nbsp;<a href="">我的订单</a>&nbsp;</span>
+          <c:if test="${sessionScope.user2!=null}">
+            <span class="fl"><a href="userInfo.jsp">欢迎回来！${sessionScope.user2.userName}</a>&nbsp;|&nbsp;<a href="">我的订单</a>&nbsp;</span>
           </c:if>
            <c:if test="${sessionScope.loginUser!=null && sessionScope.loginUser.type==1}">
             <span class="fl">|&nbsp;<a href="${ctx}/admin/product?action=index&userId=${sessionScope.loginUser.id}">后台管理</a>&nbsp;</span>

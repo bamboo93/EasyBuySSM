@@ -187,7 +187,38 @@ function addUpdate(entityId, stock) {
  * @param entityId
  */
 
-//购物车数量添加和减少
+//购物车数量添加和减少 add和sub quantity
+function addQuantity(obj,price,stock){
+	// 获取当前输入框的商品数量
+	var index=$(".car_btn_2").index(obj);
+	var quantity = $("input[name='quantity']").eq(index).val();
+	if (stock <= quantity) {
+		alert("商品数量不足");
+		return false;
+	}
+	++quantity;
+	// 将数据写入到原有的输入框内
+	$("input[name='quantity']").val(quantity);
+	var prices = quantity*price;
+	   $(".qprice").eq(index).html("￥"+prices);
+}
+//减少
+function subQuantity(obj,price){
+	
+	// 获取当前输入框的商品数量
+	var index=$(".car_btn_1").index(obj);
+	var quantity = $("input[name='quantity']").eq(index).val();
+	if (quantity == 1) {
+		return false;
+	}
+	--quantity;
+	// 将数据写入到原有的输入框内
+	$("input[name='quantity']").val(quantity);
+	var prices = quantity*price;
+	  $(".qprice").eq(index).html("￥"+prices);
+
+}
+
 function jianUpdate(entityId) {
 	var quantity = $("input[name='quantity']").val();
 	quantity = --quantity;
@@ -196,97 +227,84 @@ function jianUpdate(entityId) {
 	}
 	// 将数据写入到原有的输入框内
 	$("input[name='quantity']").val(quantity);
+	
 
 }
 
-function addQuantity(obj,price,entityId, stock) {
-	//获取被点击的事件在数组之中的小标  obj代表当前的点击事件的input输入框
-	var index = $(".car_btn_2").index(obj);
-//	alert(index);
-//	var index2 = $(".qprice").index();
-//	alert(index2);
-	// 获取当前输入框的商品数量
-	var quantity = $("input[name='quantit']").eq(index).val();
-	if (stock <= quantity) {
-		alert("商品数量不足");
-		return false;
-	}
-	quantity = ++quantity;
-	// 将数据写入到原有的输入框内
-	$("input[name='quantit']").eq(index).val(quantity);
-//	var prices = quantity*price;
-//	$(".qprice").eq(index).html("￥"+prices); 
-	
-	//将数据持久化到购物车之中
-	$.ajax({
-		"url" : "cart_addQuantity", 
-		"type" : "post",
-		"data" : "quantity="+quantity+"&entityId="+entityId,
-		"dataType" : "text",
-		success : function(jsonStr) {
-			//获取到总价格  写入到相应的地方
-//			$("#totleprice").html("￥"+jsonStr); 
-		}
-	});
-	window.location.href = "http://localhost:8080/eb/toSettlement.jsp";
-}
-/**
- * 减去 数量减
- * 
- * @param obj
- * @param entityId
- */
-function subQuantity(obj,price,entityId) {
-	//获取被点击的事件在数组之中的小标  obj代表当前的点击事件的input输入框
-	var index = $(".car_btn_1").index(obj);
-//	alert(index);
-	var quantity = $("input[name='quantit']").eq(index).val();
-	quantity = --quantity;
-	if (quantity == 0) {
-		return false;
-	}
-	// 将数据写入到原有的输入框内
-	$("input[name='quantit']").eq(index).val(quantity);
-	//改变小计的价格 
-//	var prices = quantity*price;
-//	$(".qprice").eq(index).html("￥"+prices); 
-	
-	//将数据持久化到购物车之中 
-	$.ajax({
-		"url" : "cart_addQuantity",
-		"type" : "post",
-		"data" : "quantity="+quantity+"&entityId="+entityId,
-		"dataType" : "text",
-		success : function(jsonStr) {
-			//获取到总价格  写入到相应的地方
-//			$("#totleprice").html("￥"+jsonStr); 
-		}
-	});
-	window.location.href = "http://localhost:8080/eb/toSettlement.jsp";
-}
+//function addQuantity(obj,price,entityId, stock) {
+//	//获取被点击的事件在数组之中的小标  obj代表当前的点击事件的input输入框
+//	var index = $(".car_btn_2").index(obj);
+////	alert(index);
+////	var index2 = $(".qprice").index();
+////	alert(index2);
+//	// 获取当前输入框的商品数量
+//	var quantity = $("input[name='quantit']").eq(index).val();
+//	if (stock <= quantity) {
+//		alert("商品数量不足");
+//		return false;
+//	}
+//	quantity = ++quantity;
+//	// 将数据写入到原有的输入框内
+//	$("input[name='quantit']").eq(index).val(quantity);
+////	var prices = quantity*price;
+////	$(".qprice").eq(index).html("￥"+prices); 
+//	
+//	//将数据持久化到购物车之中
+//	$.ajax({
+//		"url" : "cart_addQuantity", 
+//		"type" : "post",
+//		"data" : "quantity="+quantity+"&entityId="+entityId,
+//		"dataType" : "text",
+//		success : function(jsonStr) {
+//			//获取到总价格  写入到相应的地方
+////			$("#totleprice").html("￥"+jsonStr); 
+//		}
+//	});
+//	window.location.href = "http://localhost:8080/EasyBuySSM/toSettlement.jsp";
+//}
+///**
+// * 减去 数量减
+// * 
+// * @param obj
+// * @param entityId
+// */
+//function subQuantity(obj,price,entityId) {
+//	//获取被点击的事件在数组之中的小标  obj代表当前的点击事件的input输入框
+//	var index = $(".car_btn_1").index(obj);
+////	alert(index);
+//	var quantity = $("input[name='quantit']").eq(index).val();
+//	quantity = --quantity;
+//	if (quantity == 0) {
+//		return false;
+//	}
+//	// 将数据写入到原有的输入框内
+//	$("input[name='quantit']").eq(index).val(quantity);
+//	//改变小计的价格 
+////	var prices = quantity*price;
+////	$(".qprice").eq(index).html("￥"+prices); 
+//	
+//	//将数据持久化到购物车之中 
+//	$.ajax({
+//		"url" : "cart_addQuantity",
+//		"type" : "post",
+//		"data" : "quantity="+quantity+"&entityId="+entityId,
+//		"dataType" : "text",
+//		success : function(jsonStr) {
+//			//获取到总价格  写入到相应的地方
+////			$("#totleprice").html("￥"+jsonStr); 
+//		}
+//	});
+//	window.location.href = "http://localhost:8080/eb/toSettlement.jsp";
+//}
 
 /**
  * 删除购物车
  * 
  * @param entityId
  */
-function removeCart(obj,entityId) {
+function removeCart(obj) {
+	$(obj).parent().parent().remove();
 	//删除当前的购物车里的东西
-//	var obje = $(obj).parent().parent();
-//	obje.remove();
-	//同时删除购物车的对应商品
-	$.ajax({
-		"url" : "cart_deleteCart",
-		"type" : "post",
-		"data" : "entityId="+entityId,
-		"dataType" : "text",
-		success : function(jsonStr) {
-			//获取到总价格  写入到相应的地方
-//			$("#totleprice").html("￥"+jsonStr); 
-		}
-	});
-	//转发到购物车页面   再次取出更新后的值
-	window.location.href = "http://localhost:8080/eb/toSettlement.jsp";
 }
 
 
@@ -357,4 +375,18 @@ function addFavorite(productId) {
 			favoriteList();
 		}
 	});
+}
+//将前台数据传入UserHandler，
+function jiesuan(){
+	var fileName=$("#fileName").val();
+	var name=$("#name").val();
+	var price=$("#myPrice").val();
+	var quantity=$("input[name='quantity']").val();
+	window.location.href="isLogin?fileName="+fileName+"&name="+name+"&price="+price+"&quantity="+quantity;
+}
+//点击购买，创建订单
+function createOrders(){
+	var address=$("input:checked").val();
+	var cost=$("#cost").val();
+	window.location.href="createOrders?address="+address+"&cost="+cost;
 }

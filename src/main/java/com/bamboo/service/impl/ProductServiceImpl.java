@@ -1,6 +1,7 @@
 package com.bamboo.service.impl;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -73,6 +74,12 @@ public class ProductServiceImpl implements ProductService{
 	public Product getProductById(int id) {
 		
 		return productDAO.getProductById(id);
+	}
+	@Override
+	public int createOrder(int userId, String loginName, String address,
+			Date date, double cost, String serialNumber) {
+		productDAO.createOrder(userId, loginName, address, date, cost, serialNumber);
+		return 0;
 	}
 
 }

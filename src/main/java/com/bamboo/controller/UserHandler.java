@@ -1,16 +1,23 @@
 package com.bamboo.controller;
 
-import java.util.ArrayList;
+import java.io.UnsupportedEncodingException;
 import java.util.List;
+
+import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.bamboo.dao.CategoryDAO;
+
+
+
+
+
+import com.bamboo.entity.Address;
 import com.bamboo.entity.Category;
-import com.bamboo.entity.CategoryVO;
 import com.bamboo.entity.Product;
 import com.bamboo.entity.User;
 import com.bamboo.service.CategoryService;
@@ -32,7 +39,7 @@ public class UserHandler {
 	}
 	
 	@RequestMapping("/easybuy_login")
-	public ModelAndView login(User user){
+	public ModelAndView login(User user,HttpSession session){
 		ModelAndView mav=new ModelAndView();
 		User user2=userService.login(user);
 		if(user2!=null){
@@ -43,9 +50,41 @@ public class UserHandler {
 			mav.setViewName("main");
 			mav.addObject("list",list);
 			mav.addObject("categoryVOList",productService.queryCategoryVO(list));
+			//登录成功以后将用户存进Session中
+			session.setAttribute("user2", user2);
+			
 		}else{
 			mav.setViewName("login");
 		}
+		return mav;
+	}
+	@RequestMapping("/isLogin")
+	public ModelAndView isLogin(HttpSession session,@RequestParam("fileName")String fileName,@RequestParam("name")String productName,@RequestParam("price")double price,@RequestParam("quantity")int quantity){
+		//get方式传入的name,不支持post方式，需要进行字符格式
+		try {
+			productName=new String (productName.getBytes("ISO8859-1"),"UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		ModelAndView mav=new ModelAndView();
+		User user=(User) session.getAttribute("user2");
+		if(user.getLoginName()!=null){
+			//通过用户id获取用户地址
+			List<Address>  addresses=userService.getAddressById(user.getId());
+			Product product=new Product();
+			product.setFileName(fileName);
+			product.setName(productName);
+			product.setPrice(price);
+			mav.addObject("product", product);
+			mav.addObject("quantity", quantity);
+			mav.addObject("addresses", addresses);
+			mav.setViewName("settlement2"); 
+			
+		}else{
+			mav.setViewName("login"); 
+		}
+		
 		return mav;
 	}
 }
